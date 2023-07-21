@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS</title>
+    <style>
+       body {
+        background-color: rgb(25, 25, 25);
+        color: white;
+        font-family: Arial;
+       }
+
+       .title {
+        font-size: 30px;
+        font-weight: bold;
+       }
+
+       .rock-icon {
+        background-color: transparent;
+       width: 200px;
+       height: 200px;
+       border: 3px solid white;
+       border-radius: 100px;
+       cursor: pointer;
+        
+       }
+
+       .paper-icon {
+        background-color: transparent;
+       width: 200px;
+       height: 200px;
+       border: 3px solid white;
+       border-radius: 100px;
+       cursor: pointer;
+        
+       }
+
+       .scissors-icon {
+        background-color: transparent;
+       width: 200px;
+       height: 200px;
+       border: 3px solid white;
+       border-radius: 100px;
+       cursor: pointer;
+        
+       }
+       .icon-move {
+       height: 100px;
+      
+       }
+
+       .clicked {
+        background-color: transparent;
+       width: 200px;
+       height: 200px;
+       border: 3px solid yellow;
+       border-radius: 100px;
+       cursor: pointer;
+       }
+       .reset-button {
+        border: none;
+        padding: 10px;
+        background-color: black;
+        color: white;
+        cursor: pointer;
+        border-style: solid;
+        border-color: white;
+        margin-left: 0px;
+       
+
+       }
+
+       .reset-button:hover {
+        opacity: 0.8;
+
+       }
+
+       .reset-button:active {
+        opacity: 0.5;
+       }
+
+
+    </style>
+</head>
+<body>
+    
+    <p class = "title "> Rock Paper Scissors </p>
+    <button class = "rock-icon" onclick = "playGame('Rock');  "> <img class = "icon-move" src = "rock-emoji.png"> </button>
+    <button class = "paper-icon" onclick = "playGame('Paper'); " > <img class = "icon-move" src = "paper-emoji.png"> </button>
+    <button class = "scissors-icon" onclick = "playGame('Scissors'); "> <img class = "icon-move" src = "scissors-emoji.png"> </button>
+    <p class = "js-result"> </p>
+    <p class = "js-logic"> 
+       
+    </p>
+    <p class = "js-score">  </p>
+    <button class = "reset-button" onclick = "document.querySelector('.js-result').innerText = '';
+    document.querySelector('.js-logic').innerText = '';
+    wins = 0;
+    losses = 0;
+    ties = 0;
+    document.querySelector('.js-score').innerText = `Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`;
+    document.querySelector('.rock-icon').classList.remove('clicked');
+    document.querySelector('.paper-icon').classList.remove('clicked');
+    document.querySelector('.scissors-icon').classList.remove('clicked');
+"> Reset Score </button>
+
+    <script>
+        let wins = 0;
+        let losses = 0;
+        let ties = 0;
+        let result = '';
+        
+        function randomMove() {
+            let move = Math.random();
+            if(move < 1/3) {
+                move = 'Rock';
+            } else if(move >= 1/3 && move <2/3) {
+                move = 'Paper';
+            } else if(move >= 2/3 && move <=1) {
+                move = 'Scissors';
+            }
+            return move;
+        }
+
+        let rockClicked = false;
+        let paperClicked = false;
+        let scissorsClicked = false;
+        function playGame(user) {
+            if(rockClicked === true) {
+                document.querySelector('.rock-icon').classList.remove('clicked');
+                rockClicked = !rockClicked;
+            } else if(paperClicked === true) {
+                document.querySelector('.paper-icon').classList.remove('clicked');
+                paperClicked = !paperClicked;
+            } else if(scissorsClicked=== true) {
+                document.querySelector('.scissors-icon').classList.remove('clicked');
+                scissorsClicked = !scissorsClicked;
+            }
+          
+            let move = randomMove();
+            if(user === 'Rock') {
+                rockClicked = true;
+                document.querySelector('.rock-icon').classList.add('clicked');
+                if(move === 'Rock') {
+                    result = "Tie."
+                    ties++;
+                } else if(move === 'Paper') {
+                    result = "Lose."
+                    losses++;
+                } else if(move === 'Scissors') {
+                    result = "Win."
+                    wins++;
+                }
+            } else if(user === 'Paper') {
+                paperClicked=true;
+                document.querySelector('.paper-icon').classList.add('clicked');
+
+                if(move === 'Rock') {
+                    result = "Win."
+                    wins++;
+                } else if(move === 'Paper') {
+                    result = "Tie."
+                    ties++;
+                } else if(move === 'Scissors') {
+                    result = "Loss."
+                    losses++;
+                }
+            } else if(user === 'Scissors') {
+                scissorsClicked = true;
+                document.querySelector('.scissors-icon').classList.add('clicked');
+                if(move === 'Rock') {
+                    result = "Loss."
+                    losses++;
+                } else if(move === 'Paper') {
+                    result = "Win."
+                    wins++;
+                } else if(move === 'Scissors') {
+                    result = "Tie."
+                    ties++;
+                }
+            }
+            document.querySelector('.js-result').innerText = result;
+            document.querySelector('.js-logic').innerHTML =  `You: <img class = "icon-move" src = "${user}-emoji.png"> Computer: <img class = "icon-move" src = "${move}-emoji.png">  `;
+            document.querySelector('.js-score').innerText = `Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`;
+            
+
+        }
+
+
+     
+    </script>
+</body>
+</html>
